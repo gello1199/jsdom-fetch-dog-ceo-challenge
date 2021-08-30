@@ -10,7 +10,14 @@ document.addEventListener("DOMContentLoaded", function() {
     dogBreeds()
 
     dropDownForm.addEventListener(`change`, function(e) {
-        console.log(e.target.value);
+    const newBreeds = sortedBreeds(e.target.value);
+        console.log(newBreeds);
+    const dogBreedsUl = document.getElementById(`dog-breeds`);
+        dogBreedsUl.innerHTML = ``;
+        newBreeds.forEach(breed => {
+            addBreed(breed);
+        })
+        // console.log(e.target.value);
         });
 
 });
@@ -34,7 +41,7 @@ function dogBreeds() {
     .then(response => response.json())
     .then(data => {
         allDogBreeds = Object.keys(data.message);
-        console.log(allDogBreeds);
+        // console.log(allDogBreeds);
         for(const breed in data.message)
         addBreed(breed);
     });
@@ -51,5 +58,10 @@ function addBreed(breed) {
 };
 
 function sortedBreeds(letter) {
+    // console.log(letter);
+    // console.log(allDogBreeds);
     
+    const result = allDogBreeds.filter(breed => breed[0] === letter);
+    // console.log(result);
+    return result;
 }
